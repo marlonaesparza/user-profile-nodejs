@@ -4,13 +4,16 @@ const UserDAO = require('./../dao/user');
 const userRouter = express.Router();
 
 userRouter.post('/register', (req, res) => {
-  let params = req.body;
-  console.log('User Router - / :', params);
+  let regInfo = req.body;
 
-  return UserDAO.createUser(params)
-    .then(({ uuid }) => {
+  return UserDAO.createUser(regInfo)
+    .then(result => {
+      let { uuid } = result.dataValues;
       return res.json({ uuid })
     })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 module.exports = userRouter;
