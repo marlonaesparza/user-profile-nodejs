@@ -28,9 +28,14 @@ const User = connection.define('User', {
     unique: true
   },
   password: {
-    type: sequelize.DataTypes.STRING(30),
+    type: sequelize.DataTypes.STRING(64),
     allowNull: false,
     unique: true
+  },
+  salt: {
+    type: sequelize.DataTypes.STRING(64),
+    allowNull: false,
+    unique: false
   },
   verified: {
     type: sequelize.DataTypes.BOOLEAN,
