@@ -17,10 +17,10 @@ userRouter.post('/register', (req, res) => {
 });
 
 userRouter.post('/auth', (req, res) => {
-  let { email } = req.body;
+  let { username } = req.body;
   let uuid;
 
-  return UserDAO.findUser(email)
+  return UserDAO.findUser(username)
     .then(({ dataValues }) => {
       if (!dataValues) {
         throw dataValues;
