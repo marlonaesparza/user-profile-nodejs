@@ -7,9 +7,14 @@ const User = connection.define('User', {
     unique: true,
     primaryKey: true
   },
-  firstName: {
+  userName: {
     type: sequelize.DataTypes.STRING(50),
     allowNull: false,
+    unique: false
+  },
+  firstName: {
+    type: sequelize.DataTypes.STRING(50),
+    allowNull: true,
     unique: false
   },
   middleName: {
@@ -19,7 +24,7 @@ const User = connection.define('User', {
   },
   lastName: {
     type: sequelize.DataTypes.STRING(50),
-    allowNull: false,
+    allowNull: true,
     unique: false
   },
   email: {
