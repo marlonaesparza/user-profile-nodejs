@@ -29,7 +29,7 @@ const User = connection.define('User', {
   },
   email: {
     type: sequelize.DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true
   },
   password: {

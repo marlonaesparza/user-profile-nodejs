@@ -3,13 +3,37 @@ const UserDAO = require('./../dao/user');
 
 const userRouter = express.Router();
 
+userRouter.get('/all', (req, res) => {
+  const offset = req.query.offset;
+
+  return UserDAO.getAllUsers()
+    .then((result) => {
+      console.log('Get All Users...:', result)
+      const users = result.map(({ dataValues }) => {
+        return {
+          uuid: dataValues.uuid,
+          username: dataValues.username
+        };
+      });
+
+      return res.status(200).send(users);
+    })
+    .catch(error => {
+      console.log(error);
+      return res.status(500);
+    });
+});
+
 userRouter.post('/register', (req, res) => {
   let regInfo = req.body;
 
   return UserDAO.createUser(regInfo)
     .then(({ dataValues }) => {
-      let { uuid } = dataValues;
-      return res.json({ uuid })
+      const user = {
+        uuid: dataValues.uuid,
+        username: dataValues.username
+      };
+      return res.json(user)
     })
     .catch(error => {
       console.log(error);

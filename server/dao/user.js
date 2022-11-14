@@ -8,19 +8,16 @@ class UserDAO {
   };
 
   createUser(regInfo) {
-    let { firstName, middleName, lastName, email, password } = regInfo;
+    let { username, password } = regInfo;
     let salt = utils.createRandom32String();
 
     let user = {
-      firstName,
-      middleName,
-      lastName,
-      email,
+      username,
       password: utils.createHash(password, salt),
       salt
     };
 
-    return this.findUser(email)
+    return this.findUser(username)
       .then(result => {
         if (result) {
           throw result;
@@ -30,13 +27,18 @@ class UserDAO {
       });
   };
 
-  findUser(email) {
-    return User.findOne({ where: { email: email }});
+  getAllUsers(offset) {
+    return User.findAll();
+  }
+
+  findUser(username) {
+    return User.findOne({ where: { username: username }});
   };
 
   compare(attempted, password, salt) {
     return utils.compareHash(attempted, password, salt);
   };
 };
+
 
 module.exports = new UserDAO;
