@@ -24,6 +24,33 @@ userRouter.get('/all', (req, res) => {
     });
 });
 
+userRouter.get('/getUsernamesForFavorites', async (req, res) => {
+  const { feed } = req.query;
+  console.log('Get Usernames For Favorites (FEED DATA):', feed);
+
+  const feedWithUsernames = [];
+
+  try {
+    for (let i = 0; i < feed.length; i++) {
+      const favorite = JSON.parse(feed[i]);
+      const username = await UserDAO.getUsernameForFavorite(favorite.userUUID);
+  
+      feedWithUsernames.push({
+        ...favorite,
+        username
+      });
+    };
+
+    return res.status(200).send(feedWithUsernames);
+
+  } catch (e) {
+
+    console.log(e);
+    return res.status(400).send();
+
+  }
+});
+
 userRouter.post('/register', (req, res) => {
   let regInfo = req.body;
 

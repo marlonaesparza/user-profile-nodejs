@@ -31,6 +31,21 @@ class UserDAO {
     return User.findAll();
   }
 
+  getUsernameForFavorite(uuid) {
+    return User.findOne({
+      where: {
+        uuid
+      }
+    })
+      .then(({ dataValues }) => {
+        console.log('Get Username For Favorite:', dataValues.username);
+        return dataValues.username;
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
   findUser(username) {
     return User.findOne({ where: { username: username }});
   };
